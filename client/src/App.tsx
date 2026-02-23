@@ -1,32 +1,22 @@
-
-interface Project {
-  title: string
-  description: string
-}
-
-function ProjectCard(props: Project) {
-  return <div> 
-    <h2>
-      {props.title}
-    </h2>
-    <p>
-      {props.description}
-    </p>
-  </div>
-}
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Home from "./pages/Home"
+import About from "./pages/About"
+import Projects from "./pages/Projects"
+import ApiPage from "./pages/ApiPage"
+import Nav from "./components/Navbar"
 
 function App() {
-  const projects = [
-    { title: "Project 1", description: "This is my first project"},
-    { title: "Project 2", description: "This is my second project"}
-  ]
-  return <div>
-    {projects.map((project) => (
-        <ProjectCard title={project.title} description={project.description} key={project.title} />
-    ))}
-</div>
+  return (
+    <BrowserRouter>
+      <Nav />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/api" element={<ApiPage />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App
-
-
