@@ -14,6 +14,16 @@ function App() {
             </p>
         </div>
       </section>
+      <section id="about" className="min-h-screen">
+        <div>
+          <h2 className="text-black font-bold text-center px-4">About</h2>
+          <p>My name is Mayank Hothur, and I am currently a junior at UC Irvine. I am deeply interested in exploring emerging technologies
+            and not only learning about them, but delving into their functionalities and how they are contributing to the current AI revolution. 
+            I am most interested in AI/ML development and applications, full-stack, and mathematics. Beyond the curriculum, I enjoy going out to eat, 
+            spending time with friends, listening to music, and playing sports. 
+          </p>
+        </div>
+      </section>
       <section id="projects" className="min-h-screen">
         <div className="mx-auto px-6 py-10">
           <h1 className="text-2xl font-bold text-black mb-6">Projects</h1>
@@ -43,9 +53,6 @@ function App() {
             </a>
           </div>
         </div>
-      </section>
-      <section id="about" className="min-h-screen">
-        {/* About content goes here */}
       </section>
       <section id="apipage" className="min-h-screen">
         {/* API page content goes here */}
