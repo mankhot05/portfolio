@@ -1,4 +1,5 @@
 import Nav from "./components/Navbar"
+import ApiSection from "./components/ApiSection"
 
 function App() {
   return (
@@ -55,7 +56,7 @@ function App() {
         </div>
       </section>
       <section id="apipage" className="min-h-screen">
-        {/* API page content goes here */}
+        <ApiSection />
       </section>
     </div>
   )
