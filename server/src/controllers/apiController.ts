@@ -9,7 +9,7 @@ export async function getImageAndCaption(req: Request, res: Response) {
 
         res.json({
             imageUrl: image.url, 
-            photohrapher: image.photographer,
+            photographer: image.photographer,
             caption: caption
         })
     } catch (error) {

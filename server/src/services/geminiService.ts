@@ -1,11 +1,25 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import fetch from "node-fetch";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "")
+export async function generateCaption(topic: string): Promise<string> {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY || ""}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            model: "mistralai/mistral-7b-instruct",
+            messages: [
+                {
+                    role: "user",
+                    content: `Write exactly one short creative caption for a photo of ${topic}. Respond with only the caption, nothing else.`                }
+            ]
+        })
+    });
 
-export async function generateCaption(topic: string) : Promise<string> {
-    const model = genAI.getGenerativeModel({model: "gemini-1.5-flash"});
-    const prompt = 'Write a short, creative one sentence caption for a photo about ${topic}';
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
-    return text;
+    const data = await response.json() as any;
+    if (data.error) {
+        throw new Error(data.error.message);
+    }
+    return data.choices[0].message.content;
 }
