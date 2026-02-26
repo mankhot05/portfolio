@@ -3,6 +3,7 @@ import fetch from "node-fetch";
 interface PexelsPhoto {
     url: string;
     photographer: string;
+    query: string;
 }
 
 const queries: string[] = [
@@ -21,9 +22,10 @@ export async function getRandomImage(): Promise<PexelsPhoto> {
     );
 
     const data = await response.json() as any;
-    console.log(data)
+
     return {
         url: data.photos[0].src.large, 
-        photographer: data.photos[0].photographer
+        photographer: data.photos[0].photographer,
+        query: query
     }
 }
