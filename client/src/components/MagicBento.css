@@ -30,7 +30,7 @@
     width: 100%;
     max-width: 100%;
     padding: 1.25em;
-    border-radius: 20px;
+    border-radius: 0;
     border: 1px solid var(--border-color);
     background: var(--background-dark);
     font-weight: 300;

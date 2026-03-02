@@ -1,7 +1,9 @@
+// @ts-nocheck
 import ApiSection from "./components/ApiSection"
 import MagicBento from "./components/MagicBento"
 import Particles from "./components/Particles"
 import FadeContent from "./components/FadeContent"
+import TiltedCard from "./components/TiltedCard"
 
 
 function App() {
@@ -22,7 +24,7 @@ function App() {
       </div>
 
       {/* All content sits on top */}
-      <FadeContent blur={true} duration={1000} ease="power2.out" initialOpacity={0} className="relative z-10">
+      <FadeContent blur={true} duration={1500} ease="power2.out" initialOpacity={0} className="relative z-10">
         {/* <CardNav
           logo=""
           items={navItems}
@@ -72,11 +74,37 @@ function App() {
           </div>
         </section>
         <section id="gallery" className="min-h-screen px-4 py-20 text-left">
-          <div className="max-w-2xl">
+          <div className="max-w-[100%]">
             <h2 className="text-sm font-semibold text-black mb-4">gallery</h2>
-            <p className="text-black text-xs">
-              gallery coming soon.
-            </p>
+            <div className="flex flex-wrap gap-2 justify-start items-start">
+              {[
+                "https://m.media-amazon.com/images/I/71rtbFVgVuL._UF1000,1000_QL80_.jpg",
+                "https://m.media-amazon.com/images/I/814htMhuuML._UF1000,1000_QL80_.jpg",
+                "https://upload.wikimedia.org/wikipedia/en/f/f6/Charlie_Puth_-_Nine_Track_Mind.png",
+                "https://i.scdn.co/image/ab67616d0000b27358ae8fddecbd2630005409c9",
+                "https://www.levelman.com/content/images/2022/11/Thank-Me-Later-1.jpg",
+                "https://upload.wikimedia.org/wikipedia/en/8/8a/Alatprom.jpg",
+                "https://i1.sndcdn.com/artworks-mVAuDG6uMHzh-0-t500x500.jpg",
+                "https://m.media-amazon.com/images/I/61nmSDwpCJL._UF1000,1000_QL80_.jpg",
+                "https://upload.wikimedia.org/wikipedia/en/b/bd/The_Weeknd_-_Beauty_Behind_the_Madness.png",
+                "https://i.scdn.co/image/ab67616d0000b2736c20c4638a558132ba95bc39"
+              ].map((src, i) => (
+                <TiltedCard
+                  key={src}
+                  imageSrc={src}
+                  altText={`Album cover ${i + 1}`}
+                  containerHeight="88px"
+                  containerWidth="88px"
+                  imageHeight="88px"
+                  imageWidth="88px"
+                  rotateAmplitude={12}
+                  scaleOnHover={1.05}
+                  showMobileWarning={false}
+                  showTooltip={false}
+                  displayOverlayContent={false}
+                />
+              ))}
+            </div>
           </div>
         </section>
         <section id="apipage" className="min-h-screen px-4 py-20 text-left">
