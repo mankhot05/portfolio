@@ -14,11 +14,16 @@ function ApiSection() {
 
     return (
         <div>
-            <button onClick = {handleClick}>Generate Image</button>
+            <button
+                onClick={handleClick}
+                className="mt-4 px-4 py-2 border border-black text-black bg-transparent rounded"
+            >
+                Generate Image
+            </button>
             {imageUrl && <img src={imageUrl} />}
-            {caption && <p>{caption}</p>}
+            {caption && <p className="mt-2 text-black">{caption}</p>}
         </div>
-    ) 
+    )
 }
 
 export default ApiSection

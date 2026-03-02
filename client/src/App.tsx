@@ -1,63 +1,91 @@
-import Nav from "./components/Navbar"
 import ApiSection from "./components/ApiSection"
+import MagicBento from "./components/MagicBento"
+import Particles from "./components/Particles"
+import FadeContent from "./components/FadeContent"
+
 
 function App() {
   return (
-    <div>
-      <Nav />
-      <section id="home" className="min-h-screen">
-        <div className="flex items-center gap-4 m-6 flex-col"> 
-            <h2 className="text-xl text-black">Mayank Hothur</h2>
-            <h1 className="text-xl font-bold text-black">AI developer</h1>
-            <p className="mt-4 text-gray-700"> 
-                B.S. Applied and Computational Mathematics, Minor in Computer Science, concentration in Data Science. 
-                Currently a machine learning researcher in computational astrophysics: working on NASA SPHEREX. 
+    <div className="relative">
+      <div className="fixed inset-0 z-0">
+        <Particles
+          particleColors={["#222222"]}
+          particleCount={500}
+          particleSpread={10}
+          speed={0.3}
+          particleBaseSize={100}
+          moveParticlesOnHover
+          alphaParticles={false}
+          disableRotation={false}
+          pixelRatio={1}
+        />
+      </div>
+
+      {/* All content sits on top */}
+      <FadeContent blur={true} duration={1000} ease="power2.out" initialOpacity={0} className="relative z-10">
+        {/* <CardNav
+          logo=""
+          items={navItems}
+          baseColor="#fff"
+          menuColor="#000"
+          buttonBgColor="#111"
+          buttonTextColor="#fff"
+          ease="power3.out"
+        /> */}
+        <section id="home" className="min-h-screen flex items-start justify-between px-4 pt-2 text-left">
+          <div>
+            <h2 className="text-sm font-semibold text-black">mayank hothur</h2>
+            <h1 className="mt-1 text-xs text-black">education: math-cs @ UCI</h1>
+            <p className="mt-2 text-xs text-black max-w-xl">
+              currently: machine learning researcher @ cooray group.
             </p>
-        </div>
-      </section>
-      <section id="about" className="min-h-screen">
-        <div>
-          <h2 className="text-black font-bold text-center px-4">About</h2>
-          <p>My name is Mayank Hothur, and I am currently a junior at UC Irvine. I am deeply interested in exploring emerging technologies
-            and not only learning about them, but delving into their functionalities and how they are contributing to the current AI revolution. 
-            I am most interested in AI/ML development and applications, full-stack, and mathematics. Beyond the curriculum, I enjoy going out to eat, 
-            spending time with friends, listening to music, and playing sports. 
-          </p>
-        </div>
-      </section>
-      <section id="projects" className="min-h-screen">
-        <div className="mx-auto px-6 py-10">
-          <h1 className="text-2xl font-bold text-black mb-6">Projects</h1>
-          <div className="flex flex-row gap-4 justify-center">
-            <a
-              href="https://github.com/mankhot05/Asteroid-Game" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-96 p-6 bg-gray-200 rounded-lg shadow-md flex items-center justify-center hover:bg-gray-300 transition-colors"
-            >
-              <div>
-                <h2 className="text-black font-semibold text-center px-2">Asteroids</h2>
-                <p>A fully functional replica of the classic Asteroids arcade game, 
-                built from scratch in Java using the Swing GUI library.</p>
-              </div>
-            </a>
-            <a
-              href="https://github.com/mankhot05/vibra" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-96 p-6 bg-gray-200 rounded-lg shadow-md flex items-center justify-center hover:bg-gray-300 transition-colors"
-            >
-              <div>
-                <h2 className="text-black font-semibold text-center px-2">Vibra</h2>
-                <p>A mood-based music recommendation application that suggests songs based on how you're feeling.</p>
-              </div>
-            </a>
           </div>
-        </div>
-      </section>
-      <section id="apipage" className="min-h-screen">
-        <ApiSection />
-      </section>
+          <nav className="text-xs text-black text-right space-y-1">
+            <a href="#home" className="underline block">home</a>
+            <a href="#about" className="underline block">about me</a>
+            <a href="#projects" className="underline block">projects</a>
+            <a href="#gallery" className="underline block">gallery</a>
+            <a href="#apipage" className="underline block">api page</a>
+          </nav>
+        </section>
+        <section id="about" className="min-h-screen px-4 py-20 text-left">
+          <div className="max-w-2xl">
+            <h2 className="text-sm font-semibold text-black mb-4">about me</h2>
+            <p className="text-black">My name is Mayank Hothur...</p>
+          </div>
+        </section>
+        <section id="projects" className="min-h-screen px-4 py-20 text-left">
+          <div className="flex flex-col items-stretch">
+            <h2 className="text-sm font-semibold text-black mb-4">projects</h2>
+            <MagicBento
+              textAutoHide={true}
+              enableStars
+              enableSpotlight
+              enableBorderGlow={true}
+              enableTilt={false}
+              enableMagnetism={false}
+              clickEffect
+              spotlightRadius={400}
+              particleCount={12}
+              disableAnimations={false}
+            />
+          </div>
+        </section>
+        <section id="gallery" className="min-h-screen px-4 py-20 text-left">
+          <div className="max-w-2xl">
+            <h2 className="text-sm font-semibold text-black mb-4">gallery</h2>
+            <p className="text-black text-xs">
+              gallery coming soon.
+            </p>
+          </div>
+        </section>
+        <section id="apipage" className="min-h-screen px-4 py-20 text-left">
+          <div className="max-w-2xl">
+            <h2 className="text-sm font-semibold text-black mb-4">api page</h2>
+            <ApiSection />
+          </div>
+        </section>
+      </FadeContent>
     </div>
   )
 }
