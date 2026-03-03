@@ -1,12 +1,26 @@
 // @ts-nocheck
+import { useRef, useState, useLayoutEffect } from "react"
 import ApiSection from "./components/ApiSection"
 import MagicBento from "./components/MagicBento"
 import Particles from "./components/Particles"
 import FadeContent from "./components/FadeContent"
 import TiltedCard from "./components/TiltedCard"
+import Masonry from "./components/Masonry"
 
 
 function App() {
+  const headerRef = useRef(null)
+  const [headerHeight, setHeaderHeight] = useState(0)
+
+  useLayoutEffect(() => {
+    if (!headerRef.current) return
+    const ro = new ResizeObserver(([entry]) => {
+      setHeaderHeight(entry.contentRect.height)
+    })
+    ro.observe(headerRef.current)
+    return () => ro.disconnect()
+  }, [])
+
   return (
     <div className="relative">
       <div className="fixed inset-0 z-0">
@@ -35,7 +49,7 @@ function App() {
           ease="power3.out"
         /> */}
         <section id="home" className="min-h-screen relative flex flex-col">
-          <div className="flex items-start justify-between px-4 pt-2 text-left shrink-0">
+          <div ref={headerRef} className="flex items-start justify-between px-4 pt-2 text-left shrink-0 relative z-10">
             <div>
               <h2 className="text-sm font-semibold text-black">mayank hothur</h2>
               <h1 className="mt-1 text-xs text-black">education: math-cs @ UCI</h1>
@@ -51,8 +65,37 @@ function App() {
               <a href="#apipage" className="underline block">api page</a>
             </nav>
           </div>
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <span className="pinyon-script-regular text-black text-[clamp(4rem,18vw,14rem)] leading-none select-none">
+          <div
+            className="absolute left-0 right-0 bottom-0 overflow-hidden z-0"
+            style={{ top: headerHeight }}
+          >
+            <Masonry
+              items={[
+                { id: "1", img: "https://picsum.photos/id/1015/600/900?grayscale", url: "#", height: 400 },
+                { id: "2", img: "https://picsum.photos/id/1011/600/750?grayscale", url: "#", height: 250 },
+                { id: "3", img: "https://picsum.photos/id/1020/600/800?grayscale", url: "#", height: 600 },
+                { id: "4", img: "https://picsum.photos/id/1018/600/700?grayscale", url: "#", height: 350 },
+                { id: "5", img: "https://picsum.photos/id/1022/600/600?grayscale", url: "#", height: 300 },
+                { id: "6", img: "https://picsum.photos/id/1024/600/900?grayscale", url: "#", height: 450 },
+                { id: "7", img: "https://picsum.photos/id/1025/600/650?grayscale", url: "#", height: 320 },
+                { id: "8", img: "https://picsum.photos/id/1028/600/550?grayscale", url: "#", height: 280 },
+                { id: "9", img: "https://picsum.photos/id/1031/600/700?grayscale", url: "#", height: 340 },
+                { id: "10", img: "https://picsum.photos/id/1033/600/580?grayscale", url: "#", height: 290 },
+                { id: "11", img: "https://picsum.photos/id/1035/600/620?grayscale", url: "#", height: 310 },
+                { id: "12", img: "https://picsum.photos/id/1038/600/560?grayscale", url: "#", height: 280 },
+              ]}
+              ease="power3.out"
+              duration={0.6}
+              stagger={0.05}
+              animateFrom="bottom"
+              scaleOnHover
+              hoverScale={0.95}
+              blurToFocus
+              colorShiftOnHover={false}
+            />
+          </div>
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1]">
+            <span className="pinyon-script-regular font-bold text-red-600 text-[clamp(4rem,18vw,14rem)] leading-none select-none">
               Mayank Hothur
             </span>
           </div>
