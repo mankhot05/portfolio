@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useRef, useState, useLayoutEffect } from "react"
-import ApiSection from "./components/ApiSection"
+// import ApiSection from "./components/ApiSection"
 import MagicBento from "./components/MagicBento"
 import Particles from "./components/Particles"
 import FadeContent from "./components/FadeContent"
@@ -60,14 +60,13 @@ function App() {
             <nav className="text-xs text-black text-right space-y-1">
               <a href="#home" className="underline block">home</a>
               <a href="#about" className="underline block">about me</a>
-              <a href="#projects" className="underline block">projects</a>
               <a href="#gallery" className="underline block">gallery</a>
-              <a href="#apipage" className="underline block">api page</a>
+              <a href="#projects" className="underline block">projects</a>
             </nav>
           </div>
           <div
             className="absolute left-0 right-0 bottom-0 overflow-hidden z-0"
-            style={{ top: headerHeight }}
+            style={{ top: headerHeight + 24 }}
           >
             <Masonry
               items={[
@@ -99,13 +98,69 @@ function App() {
             </span>
           </div>
         </section>
-        <section id="about" className="min-h-screen px-4 py-20 text-left">
-          <div className="max-w-2xl">
-            <h2 className="text-sm font-semibold text-black mb-4">about me</h2>
-            <p className="text-black">My name is Mayank Hothur...</p>
+        <section id="about" className="px-4 py-12 text-left">
+          <div className="w-full flex flex-col gap-8 lg:flex-row">
+            <div className="lg:basis-[37%] lg:max-w-[37%]">
+              <h2 className="text-sm font-semibold text-black mb-4">about me</h2>
+              <p className="text-black">
+                third year student at UCI studying applied mathematics and computer science. My interests
+                are broad and varied, but I am particularly interested in the study of algorithms, deep learning, and their
+                applications to the real world. I take passion in learning new things and love to explore new ideas and
+                concepts. You can also find me stargazing, at a beach, or playing sports in my free time. A new love of
+                mine that I discovered recently is traveling, and is something that anyone will now find me doing whenever
+                given the opportunity.
+                
+                Feel free to reach out to me if you are interested in anything atla, the weeknd, AI/ML, or seeing new places. 
+                I am always open to new opportunities and collaborations since I love meeting new people.
+              </p>
+            </div>
+            <div id="gallery" className="lg:basis-[63%] lg:max-w-[63%]">
+              <h2 className="text-sm font-semibold text-black mb-4">gallery</h2>
+              <div className="flex flex-wrap gap-2 justify-start items-start">
+                {[
+                  "https://m.media-amazon.com/images/I/71rtbFVgVuL._UF1000,1000_QL80_.jpg",
+                  "https://m.media-amazon.com/images/I/814htMhuuML._UF1000,1000_QL80_.jpg",
+                  "https://upload.wikimedia.org/wikipedia/en/f/f6/Charlie_Puth_-_Nine_Track_Mind.png",
+                  "https://i.scdn.co/image/ab67616d0000b27358ae8fddecbd2630005409c9",
+                  "https://www.levelman.com/content/images/2022/11/Thank-Me-Later-1.jpg",
+                  "https://upload.wikimedia.org/wikipedia/en/8/8a/Alatprom.jpg",
+                  "https://i1.sndcdn.com/artworks-mVAuDG6uMHzh-0-t500x500.jpg",
+                  "https://m.media-amazon.com/images/I/61nmSDwpCJL._UF1000,1000_QL80_.jpg",
+                  "https://upload.wikimedia.org/wikipedia/en/b/bd/The_Weeknd_-_Beauty_Behind_the_Madness.png",
+                  "https://i.scdn.co/image/ab67616d0000b2736c20c4638a558132ba95bc39",
+                  "https://upload.wikimedia.org/wikipedia/en/5/5f/Metro_Boomin_-_Heroes_%26_Villains.png",
+                  "https://upload.wikimedia.org/wikipedia/en/a/af/Drake_-_Views_cover.jpg",
+                  "https://m.media-amazon.com/images/I/610ps7rUjaL._UF1000,1000_QL80_.jpg",
+                  "https://i.scdn.co/image/ab67616d0000b2737bf1e8d5308b5286c7b2fe5c",
+                  "https://upload.wikimedia.org/wikipedia/en/e/eb/Zayn_%E2%80%93_Icarus_Falls.png",
+                  "https://i.scdn.co/image/ab67616d0000b2738dc0d801766a5aa6a33cbe37",
+                  "https://upload.wikimedia.org/wikipedia/en/2/27/Justin_Bieber_-_Purpose_%28Official_Album_Cover%29.png",
+                  "https://www.shsoutherner.net/wp-content/uploads/2015/12/selena.png",
+                  "https://cdn-images.dzcdn.net/images/cover/d0a6a23eddef45b14563ffbab8f7717b/1900x1900-000000-80-0-0.jpg",
+                  "https://m.media-amazon.com/images/I/81nYjSknM1L._UF1000,1000_QL80_.jpg",
+                  "https://m.media-amazon.com/images/I/71wbwIvy8BL._UF1000,1000_QL80_.jpg",
+                  "https://i.scdn.co/image/ab67616d0000b2737fc4b0598b8cbed5a492d370"
+                ].map((src, i) => (
+                  <TiltedCard
+                    key={src}
+                    imageSrc={src}
+                    altText={`Album cover ${i + 1}`}
+                    containerHeight="88px"
+                    containerWidth="88px"
+                    imageHeight="88px"
+                    imageWidth="88px"
+                    rotateAmplitude={12}
+                    scaleOnHover={1.05}
+                    showMobileWarning={false}
+                    showTooltip={false}
+                    displayOverlayContent={false}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </section>
-        <section id="projects" className="min-h-screen px-4 py-20 text-left">
+        <section id="projects" className="min-h-screen px-4 pt-8 pb-20 text-left">
           <div className="flex flex-col items-stretch">
             <h2 className="text-sm font-semibold text-black mb-4">projects</h2>
             <MagicBento
@@ -122,46 +177,34 @@ function App() {
             />
           </div>
         </section>
-        <section id="gallery" className="min-h-screen px-4 py-20 text-left">
-          <div className="max-w-[100%]">
-            <h2 className="text-sm font-semibold text-black mb-4">gallery</h2>
-            <div className="flex flex-wrap gap-2 justify-start items-start">
-              {[
-                "https://m.media-amazon.com/images/I/71rtbFVgVuL._UF1000,1000_QL80_.jpg",
-                "https://m.media-amazon.com/images/I/814htMhuuML._UF1000,1000_QL80_.jpg",
-                "https://upload.wikimedia.org/wikipedia/en/f/f6/Charlie_Puth_-_Nine_Track_Mind.png",
-                "https://i.scdn.co/image/ab67616d0000b27358ae8fddecbd2630005409c9",
-                "https://www.levelman.com/content/images/2022/11/Thank-Me-Later-1.jpg",
-                "https://upload.wikimedia.org/wikipedia/en/8/8a/Alatprom.jpg",
-                "https://i1.sndcdn.com/artworks-mVAuDG6uMHzh-0-t500x500.jpg",
-                "https://m.media-amazon.com/images/I/61nmSDwpCJL._UF1000,1000_QL80_.jpg",
-                "https://upload.wikimedia.org/wikipedia/en/b/bd/The_Weeknd_-_Beauty_Behind_the_Madness.png",
-                "https://i.scdn.co/image/ab67616d0000b2736c20c4638a558132ba95bc39"
-              ].map((src, i) => (
-                <TiltedCard
-                  key={src}
-                  imageSrc={src}
-                  altText={`Album cover ${i + 1}`}
-                  containerHeight="88px"
-                  containerWidth="88px"
-                  imageHeight="88px"
-                  imageWidth="88px"
-                  rotateAmplitude={12}
-                  scaleOnHover={1.05}
-                  showMobileWarning={false}
-                  showTooltip={false}
-                  displayOverlayContent={false}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-        <section id="apipage" className="min-h-screen px-4 py-20 text-left">
+        {/* <section id="apipage" className="min-h-screen px-4 py-20 text-left">
           <div className="max-w-2xl">
             <h2 className="text-sm font-semibold text-black mb-4">api page</h2>
             <ApiSection />
           </div>
-        </section>
+        </section> */}
+        <footer className="text-black px-4 py-10 mt-8 text-[17px]">
+          <div className="max-w-7xl mx-auto flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+            <div className="font-semibold md:basis-1/3">
+              mayank hothur
+            </div>
+            <nav className="space-y-2 text-left md:text-center md:basis-1/3">
+              <a href="#home" className="block">home</a>
+              <a href="#about" className="block">about me</a>
+              <a href="#gallery" className="block">gallery</a>
+              <a href="#projects" className="block">projects</a>
+            </nav>
+            <div className="text-left md:text-right md:basis-1/3">
+              <p className="font-semibold mb-1">Let&apos;s connect!</p>
+              <p className="mb-3">hothur.mayank@gmail.com</p>
+              <div className="flex items-center gap-3 md:justify-end">
+                <div className="h-7 w-7 bg-gray-300 rounded" aria-label="instagram placeholder" />
+                <div className="h-7 w-7 bg-gray-300 rounded" aria-label="discord placeholder" />
+                <div className="h-7 w-7 bg-gray-300 rounded" aria-label="github placeholder" />
+              </div>
+            </div>
+          </div>
+        </footer>
       </FadeContent>
     </div>
   )

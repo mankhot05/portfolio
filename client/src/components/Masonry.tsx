@@ -4,19 +4,11 @@ import { gsap } from 'gsap';
 
 import './Masonry.css';
 
-const useMedia = (queries, values, defaultValue) => {
-  const get = () => values[queries.findIndex(q => matchMedia(q).matches)] ?? defaultValue;
+/** Reference column width (px) – tile heights scale with column width so layout stays proportional at any size */
+const REFERENCE_COLUMN_WIDTH = 250;
 
-  const [value, setValue] = useState(get);
-
-  useEffect(() => {
-    const handler = () => setValue(get);
-    queries.forEach(q => matchMedia(q).addEventListener('change', handler));
-    return () => queries.forEach(q => matchMedia(q).removeEventListener('change', handler));
-  }, [queries]);
-
-  return value;
-};
+/** Fixed column count so the layout arrangement doesn't change on resize */
+const FIXED_COLUMNS = 4;
 
 const useMeasure = () => {
   const ref = useRef(null);
@@ -59,13 +51,8 @@ const Masonry = ({
   blurToFocus = true,
   colorShiftOnHover = false
 }) => {
-  const columns = useMedia(
-    ['(min-width:1500px)', '(min-width:1000px)', '(min-width:600px)', '(min-width:400px)'],
-    [5, 4, 3, 2],
-    1
-  );
-
   const [containerRef, { width, height }] = useMeasure();
+  const columns = FIXED_COLUMNS;
   const [imagesReady, setImagesReady] = useState(false);
 
   const getInitialPosition = item => {
@@ -107,13 +94,15 @@ const Masonry = ({
 
     const colHeights = new Array(columns).fill(0);
     const columnWidth = width / columns;
+    // Scale tile height with column width so proportions stay consistent at any screen size
+    const heightScale = columnWidth / REFERENCE_COLUMN_WIDTH;
 
     const withPositions = items.map(child => {
       const pinnedCol =
         typeof child.column === 'number' && child.column >= 0 && child.column < columns ? child.column : null;
       const col = pinnedCol ?? colHeights.indexOf(Math.min(...colHeights));
       const x = columnWidth * col;
-      const itemHeight = child.height / 2;
+      const itemHeight = (child.height / 2) * heightScale;
       const y = colHeights[col];
 
       colHeights[col] += itemHeight;
