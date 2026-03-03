@@ -34,21 +34,28 @@ function App() {
           buttonTextColor="#fff"
           ease="power3.out"
         /> */}
-        <section id="home" className="min-h-screen flex items-start justify-between px-4 pt-2 text-left">
-          <div>
-            <h2 className="text-sm font-semibold text-black">mayank hothur</h2>
-            <h1 className="mt-1 text-xs text-black">education: math-cs @ UCI</h1>
-            <p className="mt-2 text-xs text-black max-w-xl">
-              currently: machine learning researcher @ cooray group.
-            </p>
+        <section id="home" className="min-h-screen relative flex flex-col">
+          <div className="flex items-start justify-between px-4 pt-2 text-left shrink-0">
+            <div>
+              <h2 className="text-sm font-semibold text-black">mayank hothur</h2>
+              <h1 className="mt-1 text-xs text-black">education: math-cs @ UCI</h1>
+              <p className="mt-2 text-xs text-black max-w-xl">
+                currently: machine learning researcher @ cooray group.
+              </p>
+            </div>
+            <nav className="text-xs text-black text-right space-y-1">
+              <a href="#home" className="underline block">home</a>
+              <a href="#about" className="underline block">about me</a>
+              <a href="#projects" className="underline block">projects</a>
+              <a href="#gallery" className="underline block">gallery</a>
+              <a href="#apipage" className="underline block">api page</a>
+            </nav>
           </div>
-          <nav className="text-xs text-black text-right space-y-1">
-            <a href="#home" className="underline block">home</a>
-            <a href="#about" className="underline block">about me</a>
-            <a href="#projects" className="underline block">projects</a>
-            <a href="#gallery" className="underline block">gallery</a>
-            <a href="#apipage" className="underline block">api page</a>
-          </nav>
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <span className="pinyon-script-regular text-black text-[clamp(4rem,18vw,14rem)] leading-none select-none">
+              Mayank Hothur
+            </span>
+          </div>
         </section>
         <section id="about" className="min-h-screen px-4 py-20 text-left">
           <div className="max-w-2xl">

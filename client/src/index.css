@@ -8,3 +8,9 @@ html {
 * {
     font-family: "Playfair Display", serif;
   }
+
+  .pinyon-script-regular {
+    font-family: "Pinyon Script", cursive;
+    font-weight: 400;
+    font-style: normal;
+  }
