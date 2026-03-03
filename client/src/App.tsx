@@ -77,10 +77,10 @@ function App() {
                 { id: "5", img: "/photos/IDG_20260102_125111_592.jpg", url: "#", height: 350 },
                 { id: "6", img: "/photos/IDG_20260101_152044_151.JPG", url: "#", height: 300 },
                 { id: "7", img: "/photos/IDG_20260101_190432_804.jpg", url: "#", height: 675 },
-                { id: "8", img: "/photos/IDG_20260103_175120_468.jpg", url: "#", height: 320 },
-                { id: "9", img: "/photos/IMG_9135.JPG", url: "#", height: 280 },
-                { id: "10", img: "/photos/IMG_9134.JPG", url: "#", height: 260 },
-                { id: "11", img: "/photos/IDG_20251228_124642_421.jpg", url: "#", height: 580 },
+                { id: "8", img: "/photos/IDG_20260106_191847_525.jpg", url: "#", height: 360 },
+                { id: "9", img: "/photos/IDG_20260101_181407_500.jpg", url: "#", height: 380 },
+                { id: "10", img: "/photos/IMG_9135.JPG", url: "#", height: 280 },
+                { id: "11", img: "/photos/IMG_9134.JPG", url: "#", height: 260 },
               ]}
               ease="power3.out"
               duration={0.6}
@@ -160,7 +160,7 @@ function App() {
             </div>
           </div>
         </section>
-        <section id="projects" className="min-h-screen px-4 pt-8 pb-20 text-left">
+        <section id="projects" className="px-4 pt-8 pb-8 text-left">
           <div className="flex flex-col items-stretch">
             <h2 className="text-sm font-semibold text-black mb-4">projects</h2>
             <MagicBento
@@ -198,9 +198,42 @@ function App() {
               <p className="font-semibold mb-1">Let&apos;s connect!</p>
               <p className="mb-3">hothur.mayank@gmail.com</p>
               <div className="flex items-center gap-3 md:justify-end">
-                <div className="h-7 w-7 bg-gray-300 rounded" aria-label="instagram placeholder" />
-                <div className="h-7 w-7 bg-gray-300 rounded" aria-label="discord placeholder" />
-                <div className="h-7 w-7 bg-gray-300 rounded" aria-label="github placeholder" />
+                <a
+                  href="https://www.instagram.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="instagram"
+                >
+                  <img
+                    src="https://static.vecteezy.com/system/resources/thumbnails/023/986/885/small/instagram-logo-instagram-logo-transparent-instagram-icon-transparent-free-free-png.png"
+                    alt="Instagram logo"
+                    className="h-7 w-7 object-contain"
+                  />
+                </a>
+                <a
+                  href="https://discord.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="discord"
+                >
+                  <img
+                    src="https://www.freeiconspng.com/uploads/discord-black-icon-1.png"
+                    alt="Discord logo"
+                    className="h-7 w-7 object-contain"
+                  />
+                </a>
+                <a
+                  href="https://github.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="github"
+                >
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSToyykSAAgMHoag3R0yWEQkvvJ7lN0vNR2Pw&s"
+                    alt="GitHub logo"
+                    className="h-7 w-7 object-contain"
+                  />
+                </a>
               </div>
             </div>
           </div>
