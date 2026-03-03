@@ -109,7 +109,9 @@ const Masonry = ({
     const columnWidth = width / columns;
 
     const withPositions = items.map(child => {
-      const col = colHeights.indexOf(Math.min(...colHeights));
+      const pinnedCol =
+        typeof child.column === 'number' && child.column >= 0 && child.column < columns ? child.column : null;
+      const col = pinnedCol ?? colHeights.indexOf(Math.min(...colHeights));
       const x = columnWidth * col;
       const itemHeight = child.height / 2;
       const y = colHeights[col];

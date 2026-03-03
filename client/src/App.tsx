@@ -71,18 +71,17 @@ function App() {
           >
             <Masonry
               items={[
-                { id: "1", img: "https://picsum.photos/id/1015/600/900?grayscale", url: "#", height: 400 },
-                { id: "2", img: "https://picsum.photos/id/1011/600/750?grayscale", url: "#", height: 250 },
-                { id: "3", img: "https://picsum.photos/id/1020/600/800?grayscale", url: "#", height: 600 },
-                { id: "4", img: "https://picsum.photos/id/1018/600/700?grayscale", url: "#", height: 350 },
-                { id: "5", img: "https://picsum.photos/id/1022/600/600?grayscale", url: "#", height: 300 },
-                { id: "6", img: "https://picsum.photos/id/1024/600/900?grayscale", url: "#", height: 450 },
-                { id: "7", img: "https://picsum.photos/id/1025/600/650?grayscale", url: "#", height: 320 },
-                { id: "8", img: "https://picsum.photos/id/1028/600/550?grayscale", url: "#", height: 280 },
-                { id: "9", img: "https://picsum.photos/id/1031/600/700?grayscale", url: "#", height: 340 },
-                { id: "10", img: "https://picsum.photos/id/1033/600/580?grayscale", url: "#", height: 290 },
-                { id: "11", img: "https://picsum.photos/id/1035/600/620?grayscale", url: "#", height: 310 },
-                { id: "12", img: "https://picsum.photos/id/1038/600/560?grayscale", url: "#", height: 280 },
+                { id: "1", img: "/photos/IMG_9225.JPG", url: "#", height: 400 },
+                { id: "2", img: "/photos/IDG_20260107_161152_065.JPG", url: "#", height: 375 },
+                { id: "3", img: "/photos/IDG_20260106_195925_863.JPG", url: "#", height: 420, column: 1 },
+                { id: "4", img: "/photos/IMG_8242.JPG", url: "#", height: 600 },
+                { id: "5", img: "/photos/IDG_20260102_125111_592.jpg", url: "#", height: 350 },
+                { id: "6", img: "/photos/IDG_20260101_152044_151.JPG", url: "#", height: 300 },
+                { id: "7", img: "/photos/IDG_20260101_190432_804.jpg", url: "#", height: 675 },
+                { id: "8", img: "/photos/IDG_20260103_175120_468.jpg", url: "#", height: 320 },
+                { id: "9", img: "/photos/IMG_9135.JPG", url: "#", height: 280 },
+                { id: "10", img: "/photos/IMG_9134.JPG", url: "#", height: 260 },
+                { id: "11", img: "/photos/IDG_20251228_124642_421.jpg", url: "#", height: 580 },
               ]}
               ease="power3.out"
               duration={0.6}
