@@ -2,12 +2,34 @@
 
 html {
     scroll-behavior: smooth;
-    padding: 2%;
 }
 
 * {
     font-family: "Playfair Display", serif;
   }
+
+.SpaceGrotesk {
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+#root {
+  width: 100%;
+  min-height: 100dvh;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 
   .pinyon-script-regular {
     font-family: "Pinyon Script", cursive;
