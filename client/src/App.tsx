@@ -28,7 +28,7 @@ import TiltedCard from "./components/TiltedCard"
 //   return <div className="reveal-curtain" aria-hidden="true" />
 // }
 
-function HomePage({ headerHeight }: { headerHeight: number }) {
+function HomePage({ headerHeight, isActive }: { headerHeight: number; isActive: boolean }) {
   return (
     <section
       id="home"
@@ -85,12 +85,17 @@ function HomePage({ headerHeight }: { headerHeight: number }) {
       </div>
       */}
 
-      <div className="relative z-[1] flex flex-1 flex-col px-4 py-8">
+      <motion.div
+        className="relative z-[1] flex flex-1 flex-col px-4 py-8"
+        initial={false}
+        animate={{ opacity: isActive ? 1 : 0 }}
+        transition={{ duration: 0.4, delay: isActive ? 0.15 : 0 }}
+        style={{ pointerEvents: isActive ? "auto" : "none" }}
+      >
         <div className="mx-auto w-full max-w-6xl flex flex-1 flex-col items-stretch justify-center gap-6 md:flex-row md:items-stretch md:gap-6">
           <div className="relative w-full md:basis-[48%] md:shrink-0">
             <p className="max-w-[46ch] text-left text-black text-base leading-relaxed md:absolute md:top-[60%] md:-translate-y-1/2 md:text-lg md:leading-relaxed">
-              HI, I&apos;M MAYANK. IM CURRENTLY A STUDENT AT UC IRVINE STUDYING APPLIED AND
-              COMPUTATIONAL MATHEMATICS. 
+              AI/ML RESEARCHER, FULL-STACK DEVELOPER, AND DATA SCIENTIST. 
             </p>
           </div>
 
@@ -104,33 +109,35 @@ function HomePage({ headerHeight }: { headerHeight: number }) {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }
 
 const ABOUT_TIMELINE_DATA = [
   {
-    title: "2026",
+    title: "OCT 2025 - PRESENT",
     content: (
       <p className="text-xs md:text-sm font-normal opacity-90">
-        Filler: Key milestones and projects from this year. Replace with your own copy later.
+        <span className="text-base md:text-lg font-semibold">COORAY GROUP</span>: Currently working for <span className="text-sm md:text-base font-semibold">NASA JPL</span> to develop novel deep learning methodologies and architectures with the goal of predicting redshifts. Worked with <span className="font-bold">diffusion models</span> for denoising, and created <span className="font-bold">CNN-Transformer</span> pipelines to understand astrophysical data.
       </p>
     ),
   },
   {
-    title: "2025",
+    title: "OCT 2024 - APR 2025",
     content: (
       <p className="text-xs md:text-sm font-normal opacity-90">
-        Filler: Earlier experiences and learning. Replace with your own copy later.
+        <span className="text-base md:text-lg font-semibold">HUMANITY UNLEASHED</span>: Worked on integrating temporal 
+        encoding pipelines into <span className="font-bold">multimodal transformers</span> through TACTiS-2. Conducted an extensive 
+        hyperparameter tuning study for these <span className="font-bold">multimodal transformers</span> I developed.
       </p>
     ),
   },
   {
-    title: "2024",
+    title: "AUG 2023 - JAN 2024 ",
     content: (
       <p className="text-xs md:text-sm font-normal opacity-90">
-        Filler: Recent updates and highlights. Replace with your own copy later.
+        <span className="text-base md:text-lg font-semibold">AI4MUSICIANS</span>: Designed a CNN-based <span className="font-bold">computer vision</span> pipeline to analyze digitized music scores, using <span className="font-bold">convolutional layers</span> to detect and normalize dynamic range (decibel) variations across compositions. Also adapted these architectures to capture <span className="font-bold">temporal and structural features</span> in musical notation data, while building standardized preprocessing and model integration pipelines for reproducibility.
       </p>
     ),
   },
@@ -152,14 +159,20 @@ const ABOUT_TIMELINE_DATA = [
   },
 ]
 
-function AboutPage({ headerHeight }: { headerHeight: number }) {
+function AboutPage({ headerHeight, isActive }: { headerHeight: number; isActive: boolean }) {
   return (
     <section
       id="about"
       className="px-4 py-40 md:py-48 bg-transparent text-[#f1e4ff]"
       style={{ scrollMarginTop: headerHeight + 16, minHeight: `calc(180dvh - ${headerHeight}px)` }}
     >
-      <div className="mx-auto w-full max-w-6xl flex flex-col gap-10 md:flex-row md:items-start md:gap-10">
+      <motion.div
+        className="mx-auto w-full max-w-6xl flex flex-col gap-10 md:flex-row md:items-start md:gap-10"
+        initial={false}
+        animate={{ opacity: isActive ? 1 : 0 }}
+        transition={{ duration: 0.4, delay: isActive ? 0.15 : 0 }}
+        style={{ pointerEvents: isActive ? "auto" : "none" }}
+      >
         <div className="w-full md:basis-[45%] md:shrink-0 SpaceGrotesk">
           <h2 className="mb-4 text-sm sm:text-base md:text-lg font-semibold tracking-wide">
             EXPERIENCE
@@ -171,23 +184,28 @@ function AboutPage({ headerHeight }: { headerHeight: number }) {
           <h2 className="mb-4 text-sm sm:text-base md:text-lg font-semibold tracking-wide">
             ABOUT ME
           </h2>
-          <p className="SpaceGrotesk w-full max-w-[72ch] text-xs sm:text-sm md:text-base leading-relaxed uppercase">
-            THIRD YEAR STUDENT AT UCI STUDYING APPLIED MATHEMATICS AND COMPUTER SCIENCE. MY INTERESTS
-            ARE BROAD AND VARIED, BUT I AM PARTICULARLY INTERESTED IN THE STUDY OF ALGORITHMS, DEEP LEARNING, AND THEIR
-            APPLICATIONS TO THE REAL WORLD. I TAKE PASSION IN LEARNING NEW THINGS AND LOVE TO EXPLORE NEW IDEAS AND
-            CONCEPTS. YOU CAN ALSO FIND ME STARGAZING, AT A BEACH, OR PLAYING SPORTS IN MY FREE TIME. A NEW LOVE OF
-            MINE THAT I DISCOVERED RECENTLY IS TRAVELING, AND IS SOMETHING THAT ANYONE WILL NOW FIND ME DOING WHENEVER
-            GIVEN THE OPPORTUNITY. FEEL FREE TO REACH OUT TO ME IF YOU ARE INTERESTED IN ANYTHING ATLA, THE WEEKND,
-            AI/ML, OR SEEING NEW PLACES. I AM ALWAYS OPEN TO NEW OPPORTUNITIES AND COLLABORATIONS SINCE I LOVE MEETING
-            NEW PEOPLE.
+          <p className="SpaceGrotesk w-full max-w-[72ch] text-xs sm:text-sm md:text-base leading-relaxed mb-6">
+            Third year student at UCI studying applied mathematics and computer science. My interests
+            are broad and varied, but I am particularly interested in the study of algorithms, deep learning, and their
+            applications to the real world. I take passion in learning new things and love to explore new ideas and
+            concepts. You can also find me stargazing, at a beach, or playing sports in my free time. A new love of
+            mine that I discovered recently is traveling, and is something that anyone will now find me doing whenever
+            given the opportunity. Feel free to reach out to me if you are interested in anything ATLA, The Weeknd,
+            AI/ML, or seeing new places. I am always open to new opportunities and collaborations since I love meeting
+            new people.
           </p>
+          <img
+            src="/photos/aboutme.png"
+            alt="Mayank"
+            className="w-full max-w-[72ch] rounded-lg object-cover aspect-square"
+          />
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }
 
-function GalleryPage({ headerHeight }: { headerHeight: number }) {
+function GalleryPage({ headerHeight, isActive }: { headerHeight: number; isActive: boolean }) {
   // Album covers commented out for now. Uncomment to restore.
   // const albumCovers = [
   //   "https://m.media-amazon.com/images/I/71rtbFVgVuL._UF1000,1000_QL80_.jpg",
@@ -220,6 +238,12 @@ function GalleryPage({ headerHeight }: { headerHeight: number }) {
       className="px-4 py-32 text-center bg-transparent text-[#FF1A1A]"
       style={{ scrollMarginTop: headerHeight + 16, minHeight: `calc(180dvh - ${headerHeight}px)` }}
     >
+      <motion.div
+        initial={false}
+        animate={{ opacity: isActive ? 1 : 0 }}
+        transition={{ duration: 0.4, delay: isActive ? 0.15 : 0 }}
+        style={{ pointerEvents: isActive ? "auto" : "none" }}
+      >
       <h2 className="mb-6 SpaceGrotesk text-base md:text-lg font-semibold tracking-wide">
         GALLERY
       </h2>
@@ -242,18 +266,25 @@ function GalleryPage({ headerHeight }: { headerHeight: number }) {
           />
         ))}
       </div> */}
+      </motion.div>
     </section>
   )
 }
 
-function ProjectsPage({ headerHeight }: { headerHeight: number }) {
+function ProjectsPage({ headerHeight, isActive }: { headerHeight: number; isActive: boolean }) {
   return (
     <section
       id="projects"
       className="px-4 pt-20 pb-32 text-center bg-transparent text-white"
       style={{ scrollMarginTop: headerHeight + 16, minHeight: `calc(180dvh - ${headerHeight}px)` }}
     >
-      <div className="flex flex-col items-center">
+      <motion.div
+        className="flex flex-col items-center"
+        initial={false}
+        animate={{ opacity: isActive ? 1 : 0 }}
+        transition={{ duration: 0.4, delay: isActive ? 0.15 : 0 }}
+        style={{ pointerEvents: isActive ? "auto" : "none" }}
+      >
         <h2 className="mb-6 SpaceGrotesk text-base md:text-lg font-semibold tracking-wide">
           PROJECTS
         </h2>
@@ -269,7 +300,7 @@ function ProjectsPage({ headerHeight }: { headerHeight: number }) {
           particleCount={12}
           disableAnimations={false}
         />
-      </div>
+      </motion.div>
     </section>
   )
 }
@@ -403,10 +434,10 @@ function App() {
         </header>
 
         <main className="flex-1" style={{ paddingTop: headerHeight }}>
-          <HomePage headerHeight={headerHeight} />
-          <AboutPage headerHeight={headerHeight} />
-          <GalleryPage headerHeight={headerHeight} />
-          <ProjectsPage headerHeight={headerHeight} />
+          <HomePage headerHeight={headerHeight} isActive={activeSection === "home"} />
+          <AboutPage headerHeight={headerHeight} isActive={activeSection === "about"} />
+          <GalleryPage headerHeight={headerHeight} isActive={activeSection === "gallery"} />
+          <ProjectsPage headerHeight={headerHeight} isActive={activeSection === "projects"} />
         </main>
 
         <footer className={`mt-8 px-4 py-10 text-[17px] ${headerTheme.text}`}>
