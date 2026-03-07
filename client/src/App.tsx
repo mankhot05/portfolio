@@ -141,22 +141,6 @@ const ABOUT_TIMELINE_DATA = [
       </p>
     ),
   },
-  {
-    title: "2023",
-    content: (
-      <p className="text-xs md:text-sm font-normal opacity-90">
-        Filler: Projects and growth from this year. Replace with your own copy later.
-      </p>
-    ),
-  },
-  {
-    title: "Earlier",
-    content: (
-      <p className="text-xs md:text-sm font-normal opacity-90">
-        Filler: Where it started. Replace with your own copy later.
-      </p>
-    ),
-  },
 ]
 
 function AboutPage({ headerHeight, isActive }: { headerHeight: number; isActive: boolean }) {
