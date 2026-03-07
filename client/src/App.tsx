@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { useEffect, useMemo, useRef, useState, useLayoutEffect } from "react"
+import { motion } from "framer-motion"
 import MetaBalls from "./components/MetaBalls"
+import { Timeline } from "./components/ui/timeline"
 // import ApiSection from "./components/ApiSection"
 import MagicBento from "./components/MagicBento"
 import TiltedCard from "./components/TiltedCard"
@@ -88,7 +90,7 @@ function HomePage({ headerHeight }: { headerHeight: number }) {
           <div className="relative w-full md:basis-[48%] md:shrink-0">
             <p className="max-w-[46ch] text-left text-black text-base leading-relaxed md:absolute md:top-[60%] md:-translate-y-1/2 md:text-lg md:leading-relaxed">
               HI, I&apos;M MAYANK. IM CURRENTLY A STUDENT AT UC IRVINE STUDYING APPLIED AND
-              COMPUTATIONAL MATHEMATICS. WELCOME TO MY WEBSITE!
+              COMPUTATIONAL MATHEMATICS. 
             </p>
           </div>
 
@@ -107,19 +109,69 @@ function HomePage({ headerHeight }: { headerHeight: number }) {
   )
 }
 
+const ABOUT_TIMELINE_DATA = [
+  {
+    title: "2026",
+    content: (
+      <p className="text-xs md:text-sm font-normal opacity-90">
+        Filler: Key milestones and projects from this year. Replace with your own copy later.
+      </p>
+    ),
+  },
+  {
+    title: "2025",
+    content: (
+      <p className="text-xs md:text-sm font-normal opacity-90">
+        Filler: Earlier experiences and learning. Replace with your own copy later.
+      </p>
+    ),
+  },
+  {
+    title: "2024",
+    content: (
+      <p className="text-xs md:text-sm font-normal opacity-90">
+        Filler: Recent updates and highlights. Replace with your own copy later.
+      </p>
+    ),
+  },
+  {
+    title: "2023",
+    content: (
+      <p className="text-xs md:text-sm font-normal opacity-90">
+        Filler: Projects and growth from this year. Replace with your own copy later.
+      </p>
+    ),
+  },
+  {
+    title: "Earlier",
+    content: (
+      <p className="text-xs md:text-sm font-normal opacity-90">
+        Filler: Where it started. Replace with your own copy later.
+      </p>
+    ),
+  },
+]
+
 function AboutPage({ headerHeight }: { headerHeight: number }) {
   return (
     <section
       id="about"
-      className="px-4 py-32 bg-[#5a2944] text-[#f1e4ff]"
-      style={{ scrollMarginTop: headerHeight + 16, minHeight: `calc(110dvh - ${headerHeight}px)` }}
+      className="px-4 py-40 md:py-48 bg-transparent text-[#f1e4ff]"
+      style={{ scrollMarginTop: headerHeight + 16, minHeight: `calc(180dvh - ${headerHeight}px)` }}
     >
-      <div className="w-full flex flex-col items-center text-center gap-6">
-        <div className="SpaceGrotesk max-w-2xl text-xs sm:text-sm md:text-base leading-relaxed uppercase">
+      <div className="mx-auto w-full max-w-6xl flex flex-col gap-10 md:flex-row md:items-start md:gap-10">
+        <div className="w-full md:basis-[45%] md:shrink-0 SpaceGrotesk">
+          <h2 className="mb-4 text-sm sm:text-base md:text-lg font-semibold tracking-wide">
+            EXPERIENCE
+          </h2>
+          <Timeline data={ABOUT_TIMELINE_DATA} className="bg-transparent" />
+        </div>
+
+        <div className="w-full md:basis-[55%] md:shrink-0 text-left pl-4">
           <h2 className="mb-4 text-sm sm:text-base md:text-lg font-semibold tracking-wide">
             ABOUT ME
           </h2>
-          <p>
+          <p className="SpaceGrotesk w-full max-w-[72ch] text-xs sm:text-sm md:text-base leading-relaxed uppercase">
             THIRD YEAR STUDENT AT UCI STUDYING APPLIED MATHEMATICS AND COMPUTER SCIENCE. MY INTERESTS
             ARE BROAD AND VARIED, BUT I AM PARTICULARLY INTERESTED IN THE STUDY OF ALGORITHMS, DEEP LEARNING, AND THEIR
             APPLICATIONS TO THE REAL WORLD. I TAKE PASSION IN LEARNING NEW THINGS AND LOVE TO EXPLORE NEW IDEAS AND
@@ -136,41 +188,43 @@ function AboutPage({ headerHeight }: { headerHeight: number }) {
 }
 
 function GalleryPage({ headerHeight }: { headerHeight: number }) {
-  const albumCovers = [
-    "https://m.media-amazon.com/images/I/71rtbFVgVuL._UF1000,1000_QL80_.jpg",
-    "https://m.media-amazon.com/images/I/814htMhuuML._UF1000,1000_QL80_.jpg",
-    "https://upload.wikimedia.org/wikipedia/en/f/f6/Charlie_Puth_-_Nine_Track_Mind.png",
-    "https://i.scdn.co/image/ab67616d0000b27358ae8fddecbd2630005409c9",
-    "https://www.levelman.com/content/images/2022/11/Thank-Me-Later-1.jpg",
-    "https://upload.wikimedia.org/wikipedia/en/8/8a/Alatprom.jpg",
-    "https://i1.sndcdn.com/artworks-mVAuDG6uMHzh-0-t500x500.jpg",
-    "https://m.media-amazon.com/images/I/61nmSDwpCJL._UF1000,1000_QL80_.jpg",
-    "https://upload.wikimedia.org/wikipedia/en/b/bd/The_Weeknd_-_Beauty_Behind_the_Madness.png",
-    "https://i.scdn.co/image/ab67616d0000b2736c20c4638a558132ba95bc39",
-    "https://upload.wikimedia.org/wikipedia/en/5/5f/Metro_Boomin_-_Heroes_%26_Villains.png",
-    "https://upload.wikimedia.org/wikipedia/en/a/af/Drake_-_Views_cover.jpg",
-    "https://m.media-amazon.com/images/I/610ps7rUjaL._UF1000,1000_QL80_.jpg",
-    "https://i.scdn.co/image/ab67616d0000b2737bf1e8d5308b5286c7b2fe5c",
-    "https://upload.wikimedia.org/wikipedia/en/e/eb/Zayn_%E2%80%93_Icarus_Falls.png",
-    "https://i.scdn.co/image/ab67616d0000b2738dc0d801766a5aa6a33cbe37",
-    "https://upload.wikimedia.org/wikipedia/en/2/27/Justin_Bieber_-_Purpose_%28Official_Album_Cover%29.png",
-    "https://www.shsoutherner.net/wp-content/uploads/2015/12/selena.png",
-    "https://cdn-images.dzcdn.net/images/cover/d0a6a23eddef45b14563ffbab8f7717b/1900x1900-000000-80-0-0.jpg",
-    "https://m.media-amazon.com/images/I/81nYjSknM1L._UF1000,1000_QL80_.jpg",
-    "https://m.media-amazon.com/images/I/71wbwIvy8BL._UF1000,1000_QL80_.jpg",
-    "https://i.scdn.co/image/ab67616d0000b2737fc4b0598b8cbed5a492d370",
-  ]
+  // Album covers commented out for now. Uncomment to restore.
+  // const albumCovers = [
+  //   "https://m.media-amazon.com/images/I/71rtbFVgVuL._UF1000,1000_QL80_.jpg",
+  //   "https://m.media-amazon.com/images/I/814htMhuuML._UF1000,1000_QL80_.jpg",
+  //   "https://upload.wikimedia.org/wikipedia/en/f/f6/Charlie_Puth_-_Nine_Track_Mind.png",
+  //   "https://i.scdn.co/image/ab67616d0000b27358ae8fddecbd2630005409c9",
+  //   "https://www.levelman.com/content/images/2022/11/Thank-Me-Later-1.jpg",
+  //   "https://upload.wikimedia.org/wikipedia/en/8/8a/Alatprom.jpg",
+  //   "https://i1.sndcdn.com/artworks-mVAuDG6uMHzh-0-t500x500.jpg",
+  //   "https://m.media-amazon.com/images/I/61nmSDwpCJL._UF1000,1000_QL80_.jpg",
+  //   "https://upload.wikimedia.org/wikipedia/en/b/bd/The_Weeknd_-_Beauty_Behind_the_Madness.png",
+  //   "https://i.scdn.co/image/ab67616d0000b2736c20c4638a558132ba95bc39",
+  //   "https://upload.wikimedia.org/wikipedia/en/5/5f/Metro_Boomin_-_Heroes_%26_Villains.png",
+  //   "https://upload.wikimedia.org/wikipedia/en/a/af/Drake_-_Views_cover.jpg",
+  //   "https://m.media-amazon.com/images/I/610ps7rUjaL._UF1000,1000_QL80_.jpg",
+  //   "https://i.scdn.co/image/ab67616d0000b2737bf1e8d5308b5286c7b2fe5c",
+  //   "https://upload.wikimedia.org/wikipedia/en/e/eb/Zayn_%E2%80%93_Icarus_Falls.png",
+  //   "https://i.scdn.co/image/ab67616d0000b2738dc0d801766a5aa6a33cbe37",
+  //   "https://upload.wikimedia.org/wikipedia/en/2/27/Justin_Bieber_-_Purpose_%28Official_Album_Cover%29.png",
+  //   "https://www.shsoutherner.net/wp-content/uploads/2015/12/selena.png",
+  //   "https://cdn-images.dzcdn.net/images/cover/d0a6a23eddef45b14563ffbab8f7717b/1900x1900-000000-80-0-0.jpg",
+  //   "https://m.media-amazon.com/images/I/81nYjSknM1L._UF1000,1000_QL80_.jpg",
+  //   "https://m.media-amazon.com/images/I/71wbwIvy8BL._UF1000,1000_QL80_.jpg",
+  //   "https://i.scdn.co/image/ab67616d0000b2737fc4b0598b8cbed5a492d370",
+  // ]
 
   return (
     <section
       id="gallery"
-      className="px-4 py-32 text-center bg-[#1D4ED8] text-[#FF1A1A]"
-      style={{ scrollMarginTop: headerHeight + 16, minHeight: `calc(110dvh - ${headerHeight}px)` }}
+      className="px-4 py-32 text-center bg-transparent text-[#FF1A1A]"
+      style={{ scrollMarginTop: headerHeight + 16, minHeight: `calc(180dvh - ${headerHeight}px)` }}
     >
       <h2 className="mb-6 SpaceGrotesk text-base md:text-lg font-semibold tracking-wide">
         GALLERY
       </h2>
-      <div className="flex flex-wrap items-start justify-center gap-2 SpaceGrotesk">
+      {/* Album cover grid commented out. Uncomment the albumCovers array and this block to restore. */}
+      {/* <div className="flex flex-wrap items-start justify-center gap-2 SpaceGrotesk">
         {albumCovers.map((src, i) => (
           <TiltedCard
             key={src}
@@ -187,7 +241,7 @@ function GalleryPage({ headerHeight }: { headerHeight: number }) {
             displayOverlayContent={false}
           />
         ))}
-      </div>
+      </div> */}
     </section>
   )
 }
@@ -196,8 +250,8 @@ function ProjectsPage({ headerHeight }: { headerHeight: number }) {
   return (
     <section
       id="projects"
-      className="px-4 pt-20 pb-32 text-center bg-orange-500 text-white"
-      style={{ scrollMarginTop: headerHeight + 16, minHeight: `calc(110dvh - ${headerHeight}px)` }}
+      className="px-4 pt-20 pb-32 text-center bg-transparent text-white"
+      style={{ scrollMarginTop: headerHeight + 16, minHeight: `calc(180dvh - ${headerHeight}px)` }}
     >
       <div className="flex flex-col items-center">
         <h2 className="mb-6 SpaceGrotesk text-base md:text-lg font-semibold tracking-wide">
@@ -237,10 +291,10 @@ function App() {
 
   const themes = useMemo(
     () => ({
-      home: { bg: "bg-white", text: "text-black", hex: "#000000" },
-      about: { bg: "bg-[#5a2944]", text: "text-[#f1e4ff]", hex: "#f1e4ff" },
-      gallery: { bg: "bg-[#1D4ED8]", text: "text-[#FF1A1A]", hex: "#FF1A1A" },
-      projects: { bg: "bg-orange-500", text: "text-white", hex: "#FFFFFF" },
+      home: { bg: "bg-white", text: "text-black", hex: "#000000", bgValue: "#ffffff" },
+      about: { bg: "bg-[#5a2944]", text: "text-[#f1e4ff]", hex: "#f1e4ff", bgValue: "#5a2944" },
+      gallery: { bg: "bg-[#1D4ED8]", text: "text-[#FF1A1A]", hex: "#FF1A1A", bgValue: "#1D4ED8" },
+      projects: { bg: "bg-orange-500", text: "text-white", hex: "#FFFFFF", bgValue: "#f97316" },
     }),
     []
   )
@@ -249,35 +303,43 @@ function App() {
 
   useEffect(() => {
     const sectionIds: Array<"home" | "about" | "gallery" | "projects"> = ["home", "about", "gallery", "projects"]
-    const sections = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter(Boolean) as HTMLElement[]
+    const triggerY = headerHeight + 120
 
-    if (!sections.length) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting)
-        if (!visible.length) return
-        visible.sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))
-        const topId = visible[0]?.target?.id as any
-        if (topId && sectionIds.includes(topId)) setActiveSection(topId)
-      },
-      {
-        root: null,
-        threshold: [0.15, 0.25, 0.35, 0.5],
-        rootMargin: `-${headerHeight + 8}px 0px -55% 0px`,
+    function updateActiveSection() {
+      let active: (typeof sectionIds)[number] = "home"
+      for (const id of sectionIds) {
+        const el = document.getElementById(id)
+        if (!el) continue
+        const { top, bottom } = el.getBoundingClientRect()
+        if (top <= triggerY && bottom >= triggerY) {
+          active = id
+          break
+        }
+        if (top > triggerY) break
+        active = id
       }
-    )
+      setActiveSection(active)
+    }
 
-    for (const s of sections) observer.observe(s)
-    return () => observer.disconnect()
+    updateActiveSection()
+    window.addEventListener("scroll", updateActiveSection, { passive: true })
+    window.addEventListener("resize", updateActiveSection)
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection)
+      window.removeEventListener("resize", updateActiveSection)
+    }
   }, [headerHeight])
 
   return (
-    <div className="relative min-h-[100dvh] overflow-x-hidden bg-white text-black">
-        {/* {isHome ? <HomeRevealCurtain key={location.key || location.pathname} /> : null} */}
-
+    <div className="relative min-h-[100dvh] overflow-x-hidden text-black">
+        <motion.div
+          className="fixed inset-0 z-0"
+          initial={{ backgroundColor: themes[activeSection].bgValue }}
+          animate={{ backgroundColor: themes[activeSection].bgValue }}
+          transition={{ type: "tween", duration: 0.6, ease: "easeInOut" }}
+          aria-hidden
+        />
+        <div className="relative z-10">
         <header
           ref={headerRef}
           className={`fixed top-0 left-0 right-0 z-50 w-full px-2 pt-4 pb-3 transition-colors duration-300 ${headerTheme.bg} ${headerTheme.text}`}
@@ -347,7 +409,7 @@ function App() {
           <ProjectsPage headerHeight={headerHeight} />
         </main>
 
-        <footer className="mt-8 px-4 py-10 text-[17px]">
+        <footer className={`mt-8 px-4 py-10 text-[17px] ${headerTheme.text}`}>
           <div className="mx-auto flex max-w-7xl flex-col gap-10 md:flex-row md:items-start md:justify-between">
             <div className="font-semibold md:basis-1/3">
               MAYANK HOTHUR
@@ -357,6 +419,7 @@ function App() {
             </div> 
           </div>
         </footer>
+        </div>
     </div>
   )
 }
