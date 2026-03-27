@@ -1,11 +1,11 @@
 // @ts-nocheck
-import { useEffect, useMemo, useRef, useState, useLayoutEffect } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState, useLayoutEffect } from "react"
 import { motion } from "framer-motion"
+import Lenis from "lenis"
 import MetaBalls from "./components/MetaBalls"
 import { Timeline } from "./components/ui/timeline"
 // import ApiSection from "./components/ApiSection"
 import MagicBento from "./components/MagicBento"
-import TiltedCard from "./components/TiltedCard"
 // import Masonry from "./components/Masonry"
 
 /*
@@ -29,6 +29,37 @@ import TiltedCard from "./components/TiltedCard"
 // }
 
 function HomePage({ headerHeight, isActive }: { headerHeight: number; isActive: boolean }) {
+  const rightPhotoRef = useRef(null)
+  const [homePhotoHeightPx, setHomePhotoHeightPx] = useState(null)
+
+  const measureHomePhotoHeight = useCallback(() => {
+    const el = rightPhotoRef.current
+    if (!el) return
+    const isMd = window.matchMedia("(min-width: 768px)").matches
+    if (!isMd) {
+      setHomePhotoHeightPx(null)
+      return
+    }
+    const h = el.getBoundingClientRect().height
+    if (h > 0) setHomePhotoHeightPx(Math.round(h))
+  }, [])
+
+  useLayoutEffect(() => {
+    measureHomePhotoHeight()
+    const el = rightPhotoRef.current
+    if (!el) return
+    const ro = new ResizeObserver(measureHomePhotoHeight)
+    ro.observe(el)
+    window.addEventListener("resize", measureHomePhotoHeight)
+    const mql = window.matchMedia("(min-width: 768px)")
+    mql.addEventListener("change", measureHomePhotoHeight)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener("resize", measureHomePhotoHeight)
+      mql.removeEventListener("change", measureHomePhotoHeight)
+    }
+  }, [measureHomePhotoHeight, isActive])
+
   return (
     <section
       id="home"
@@ -87,24 +118,44 @@ function HomePage({ headerHeight, isActive }: { headerHeight: number; isActive: 
 
       <motion.div
         className="relative z-[1] flex flex-1 flex-col px-4 py-8"
-        initial={false}
-        animate={{ opacity: isActive ? 1 : 0 }}
-        transition={{ duration: 0.4, delay: isActive ? 0.15 : 0 }}
+        initial={{ opacity: 1, filter: "blur(14px)" }}
+        animate={
+          isActive
+            ? { opacity: 1, filter: "blur(0px)" }
+            : { opacity: 0, filter: "blur(12px)" }
+        }
+        transition={{
+          opacity: { duration: 0.4, delay: isActive ? 0.15 : 0 },
+          filter: { duration: isActive ? 1 : 0.25, ease: "easeOut" },
+        }}
         style={{ pointerEvents: isActive ? "auto" : "none" }}
       >
         <div className="mx-auto w-full max-w-6xl flex flex-1 flex-col items-stretch justify-center gap-6 md:flex-row md:items-stretch md:gap-6">
-          <div className="relative w-full md:basis-[48%] md:shrink-0">
-            <p className="max-w-[46ch] text-left text-black text-base leading-relaxed md:absolute md:top-[60%] md:-translate-y-1/2 md:text-lg md:leading-relaxed">
-              AI/ML RESEARCHER, FULL-STACK DEVELOPER, AND DATA SCIENTIST. 
-            </p>
+          <div className="relative w-full md:basis-[48%] md:shrink-0 md:flex md:items-center md:justify-start">
+            <div
+              className="relative w-full max-w-[560px] overflow-hidden"
+              style={homePhotoHeightPx != null ? { height: homePhotoHeightPx } : undefined}
+            >
+              <img
+                src="/photos/home-tagline.png"
+                alt="AI/ML researcher, full-stack developer, and data scientist"
+                className={
+                  homePhotoHeightPx != null
+                    ? "w-full h-auto object-contain md:absolute md:inset-0 md:h-full md:w-full md:object-cover md:object-center"
+                    : "w-full h-auto object-contain"
+                }
+              />
+            </div>
           </div>
 
           <div className="w-full md:basis-[52%] md:grow md:flex md:justify-start">
             <div className="relative w-full max-w-[560px] overflow-hidden">
               <img
+                ref={rightPhotoRef}
                 src="/photos/homepage.png"
                 alt="Homepage"
                 className="w-full h-auto object-contain"
+                onLoad={measureHomePhotoHeight}
               />
             </div>
           </div>
@@ -114,12 +165,12 @@ function HomePage({ headerHeight, isActive }: { headerHeight: number; isActive: 
   )
 }
 
-const ABOUT_TIMELINE_DATA = [
+const EXPERIENCE_TIMELINE_DATA = [
   {
     title: "OCT 2025 - PRESENT",
     content: (
       <p className="text-xs md:text-sm font-normal opacity-90">
-        <span className="text-base md:text-lg font-semibold">COORAY GROUP</span>: Currently working for <span className="text-sm md:text-base font-semibold">NASA JPL</span> to develop novel deep learning methodologies and architectures with the goal of predicting redshifts. Worked with <span className="font-bold">diffusion models</span> for denoising, and created <span className="font-bold">CNN-Transformer</span> pipelines to understand astrophysical data.
+        <span className="text-base md:text-lg font-semibold">COORAY GROUP</span>: Currently working for <span className="text-sm md:text-base font-semibold">NASA JPL</span> to develop and deploy novel architectures with the goal of predicting redshifts. Worked with <span className="font-bold">diffusion models</span> for denoising, and created <span className="font-bold">CNN-Transformer</span> pipelines to understand astrophysical data.
       </p>
     ),
   },
@@ -127,9 +178,9 @@ const ABOUT_TIMELINE_DATA = [
     title: "OCT 2024 - APR 2025",
     content: (
       <p className="text-xs md:text-sm font-normal opacity-90">
-        <span className="text-base md:text-lg font-semibold">HUMANITY UNLEASHED</span>: Worked on integrating temporal 
-        encoding pipelines into <span className="font-bold">multimodal transformers</span> through TACTiS-2. Conducted an extensive 
-        hyperparameter tuning study for these <span className="font-bold">multimodal transformers</span> I developed.
+        <span className="text-base md:text-lg font-semibold">HUMANITY UNLEASHED</span>: Working on integrating temporal
+        encoding pipelines into <span className="font-bold">multimodal transformers</span> through TACTiS-2. Conducted an
+        extensive hyperparameter tuning study for said architectures.
       </p>
     ),
   },
@@ -137,119 +188,135 @@ const ABOUT_TIMELINE_DATA = [
     title: "AUG 2023 - JAN 2024 ",
     content: (
       <p className="text-xs md:text-sm font-normal opacity-90">
-        <span className="text-base md:text-lg font-semibold">AI4MUSICIANS</span>: Designed a CNN-based <span className="font-bold">computer vision</span> pipeline to analyze digitized music scores, using <span className="font-bold">convolutional layers</span> to detect and normalize dynamic range (decibel) variations across compositions. Also adapted these architectures to capture <span className="font-bold">temporal and structural features</span> in musical notation data, while building standardized preprocessing and model integration pipelines for reproducibility.
+        <span className="text-base md:text-lg font-semibold">AI4MUSICIANS</span>: Designed a CNN-based <span className="font-bold">computer vision</span> pipeline to analyze digitized music scores, using <span className="font-bold">convolutional layers</span> to detect and normalize dynamic range (decibel) variations across compositions.
       </p>
     ),
   },
+]
+
+const ABOUT_ME_PHOTOS = [
+  { src: "/photos/aboutme.png", alt: "Mayank — sunset" },
+  { src: "/photos/IMG_9225.JPG", alt: "About me — photo" },
+  { src: "/photos/IMG_8242.JPG", alt: "About me — photo" },
 ]
 
 function AboutPage({ headerHeight, isActive }: { headerHeight: number; isActive: boolean }) {
   return (
     <section
       id="about"
-      className="px-4 py-40 md:py-48 bg-transparent text-[#f1e4ff]"
-      style={{ scrollMarginTop: headerHeight + 16, minHeight: `calc(180dvh - ${headerHeight}px)` }}
+      className="px-4 bg-transparent text-black flex flex-col items-center justify-center"
+      style={{
+        scrollMarginTop: headerHeight + 16,
+        minHeight: `calc(100dvh - ${headerHeight}px)`,
+      }}
     >
       <motion.div
-        className="mx-auto w-full max-w-6xl flex flex-col gap-10 md:flex-row md:items-start md:gap-10"
+        className="mx-auto w-full max-w-7xl flex flex-col items-center text-center SpaceGrotesk py-16 md:py-24"
         initial={false}
         animate={{ opacity: isActive ? 1 : 0 }}
-        transition={{ duration: 0.4, delay: isActive ? 0.15 : 0 }}
+        transition={{ duration: 0.3, delay: isActive ? 0.06 : 0, ease: "easeOut" }}
         style={{ pointerEvents: isActive ? "auto" : "none" }}
       >
-        <div className="w-full md:basis-[45%] md:shrink-0 SpaceGrotesk">
-          <h2 className="mb-4 text-sm sm:text-base md:text-lg font-semibold tracking-wide">
-            EXPERIENCE
-          </h2>
-          <Timeline data={ABOUT_TIMELINE_DATA} className="bg-transparent" />
-        </div>
-
-        <div className="w-full md:basis-[55%] md:shrink-0 text-left pl-4">
-          <h2 className="mb-4 text-sm sm:text-base md:text-lg font-semibold tracking-wide">
-            ABOUT ME
-          </h2>
-          <p className="SpaceGrotesk w-full max-w-[72ch] text-xs sm:text-sm md:text-base leading-relaxed mb-6">
-            Third year student at UCI studying applied mathematics and computer science. My interests
-            are broad and varied, but I am particularly interested in the study of algorithms, deep learning, and their
-            applications to the real world. I take passion in learning new things and love to explore new ideas and
-            concepts. You can also find me stargazing, at a beach, or playing sports in my free time. A new love of
-            mine that I discovered recently is traveling, and is something that anyone will now find me doing whenever
-            given the opportunity. Feel free to reach out to me if you are interested in anything ATLA, The Weeknd,
-            AI/ML, or seeing new places. I am always open to new opportunities and collaborations since I love meeting
-            new people.
-          </p>
-          <img
-            src="/photos/aboutme.png"
-            alt="Mayank"
-            className="w-full max-w-[72ch] rounded-lg object-cover aspect-square"
-          />
+        <h2 className="mb-4 text-sm sm:text-base md:text-lg font-semibold tracking-wide">
+          ABOUT ME
+        </h2>
+        <p className="w-full max-w-[72ch] text-xs sm:text-sm md:text-base leading-relaxed mb-6 mx-auto">
+          Third year student at UCI studying applied mathematics and computer science. My interests
+          are broad and varied, but I am particularly interested in the study of algorithms, <span className="font-bold">deep learning</span>, and their
+          applications to the real world. I am simultaneously learning <span className="font-bold">computer science</span> and <span className="font-bold">full-stack development</span>! 
+          I take passion in learning new things and love to explore new ideas and concepts. Some things that I am interested in learning in the future are <span className="font-bold">quantitative finance</span>, 
+          <span className="font-bold"> physics</span>, and their applications with machine learning. You can also find me stargazing, at a beach, or playing sports in my free time. A new love of
+          mine that I discovered recently is traveling, and is something that anyone will now find me doing whenever
+          given the opportunity. Feel free to reach out, as I am always open to new opportunities and collaborations!
+        </p>
+        <p className="text-xs sm:text-sm md:text-base opacity-90 mb-6 max-w-[72ch] mx-auto">
+          future places to visit...
+          <br />
+          Italy, Greece, China, Switzerland, Czech Republic
+        </p>
+        <div
+          className="w-full mx-auto px-1 sm:px-2 grid grid-cols-3 gap-3 sm:gap-4 md:gap-5 lg:gap-6"
+          aria-label="About me photos"
+        >
+          {ABOUT_ME_PHOTOS.map(({ src, alt }) => (
+            <div
+              key={src}
+              className="aspect-square w-full min-w-0 overflow-hidden rounded-lg bg-neutral-100"
+            >
+              <img
+                src={src}
+                alt={alt}
+                className="size-full object-cover object-center"
+                loading="lazy"
+              />
+            </div>
+          ))}
         </div>
       </motion.div>
     </section>
   )
 }
 
-function GalleryPage({ headerHeight, isActive }: { headerHeight: number; isActive: boolean }) {
-  // Album covers commented out for now. Uncomment to restore.
-  // const albumCovers = [
-  //   "https://m.media-amazon.com/images/I/71rtbFVgVuL._UF1000,1000_QL80_.jpg",
-  //   "https://m.media-amazon.com/images/I/814htMhuuML._UF1000,1000_QL80_.jpg",
-  //   "https://upload.wikimedia.org/wikipedia/en/f/f6/Charlie_Puth_-_Nine_Track_Mind.png",
-  //   "https://i.scdn.co/image/ab67616d0000b27358ae8fddecbd2630005409c9",
-  //   "https://www.levelman.com/content/images/2022/11/Thank-Me-Later-1.jpg",
-  //   "https://upload.wikimedia.org/wikipedia/en/8/8a/Alatprom.jpg",
-  //   "https://i1.sndcdn.com/artworks-mVAuDG6uMHzh-0-t500x500.jpg",
-  //   "https://m.media-amazon.com/images/I/61nmSDwpCJL._UF1000,1000_QL80_.jpg",
-  //   "https://upload.wikimedia.org/wikipedia/en/b/bd/The_Weeknd_-_Beauty_Behind_the_Madness.png",
-  //   "https://i.scdn.co/image/ab67616d0000b2736c20c4638a558132ba95bc39",
-  //   "https://upload.wikimedia.org/wikipedia/en/5/5f/Metro_Boomin_-_Heroes_%26_Villains.png",
-  //   "https://upload.wikimedia.org/wikipedia/en/a/af/Drake_-_Views_cover.jpg",
-  //   "https://m.media-amazon.com/images/I/610ps7rUjaL._UF1000,1000_QL80_.jpg",
-  //   "https://i.scdn.co/image/ab67616d0000b2737bf1e8d5308b5286c7b2fe5c",
-  //   "https://upload.wikimedia.org/wikipedia/en/e/eb/Zayn_%E2%80%93_Icarus_Falls.png",
-  //   "https://i.scdn.co/image/ab67616d0000b2738dc0d801766a5aa6a33cbe37",
-  //   "https://upload.wikimedia.org/wikipedia/en/2/27/Justin_Bieber_-_Purpose_%28Official_Album_Cover%29.png",
-  //   "https://www.shsoutherner.net/wp-content/uploads/2015/12/selena.png",
-  //   "https://cdn-images.dzcdn.net/images/cover/d0a6a23eddef45b14563ffbab8f7717b/1900x1900-000000-80-0-0.jpg",
-  //   "https://m.media-amazon.com/images/I/81nYjSknM1L._UF1000,1000_QL80_.jpg",
-  //   "https://m.media-amazon.com/images/I/71wbwIvy8BL._UF1000,1000_QL80_.jpg",
-  //   "https://i.scdn.co/image/ab67616d0000b2737fc4b0598b8cbed5a492d370",
-  // ]
+const RESUME_PDF_HREF = "/mayankhothurresume.pdf"
 
+function ExperiencePage({ headerHeight, isActive }: { headerHeight: number; isActive: boolean }) {
   return (
     <section
-      id="gallery"
-      className="px-4 py-32 text-center bg-transparent text-[#FF1A1A]"
-      style={{ scrollMarginTop: headerHeight + 16, minHeight: `calc(180dvh - ${headerHeight}px)` }}
+      id="experience"
+      className="px-4 bg-transparent text-black flex flex-col items-center justify-center"
+      style={{
+        scrollMarginTop: headerHeight + 16,
+        minHeight: `calc(100dvh - ${headerHeight}px)`,
+      }}
     >
       <motion.div
+        className="mx-auto w-full max-w-6xl flex flex-col gap-12 md:flex-row md:items-start md:gap-16 lg:gap-20 py-16 md:py-24 SpaceGrotesk"
         initial={false}
         animate={{ opacity: isActive ? 1 : 0 }}
-        transition={{ duration: 0.4, delay: isActive ? 0.15 : 0 }}
+        transition={{ duration: 0.3, delay: isActive ? 0.06 : 0, ease: "easeOut" }}
         style={{ pointerEvents: isActive ? "auto" : "none" }}
       >
-      <h2 className="mb-6 SpaceGrotesk text-base md:text-lg font-semibold tracking-wide">
-        GALLERY
-      </h2>
-      {/* Album cover grid commented out. Uncomment the albumCovers array and this block to restore. */}
-      {/* <div className="flex flex-wrap items-start justify-center gap-2 SpaceGrotesk">
-        {albumCovers.map((src, i) => (
-          <TiltedCard
-            key={src}
-            imageSrc={src}
-            altText={`Album cover ${i + 1}`}
-            containerHeight="88px"
-            containerWidth="88px"
-            imageHeight="88px"
-            imageWidth="88px"
-            rotateAmplitude={12}
-            scaleOnHover={1.05}
-            showMobileWarning={false}
-            showTooltip={false}
-            displayOverlayContent={false}
-          />
-        ))}
-      </div> */}
+        <div className="w-full md:basis-[48%] md:shrink-0 md:min-w-0 text-left">
+          <h2 className="mb-6 md:mb-8 text-sm sm:text-base md:text-lg font-semibold tracking-wide text-center md:text-left">
+            EXPERIENCE
+          </h2>
+          <div className="w-full">
+            <Timeline data={EXPERIENCE_TIMELINE_DATA} className="bg-transparent" />
+          </div>
+        </div>
+
+        <div
+          className="w-full md:basis-[52%] md:shrink-0 md:min-w-0 flex flex-col gap-4 md:sticky md:self-start text-left"
+          style={{ top: headerHeight > 0 ? headerHeight + 16 : undefined }}
+        >
+          <h2 className="text-sm sm:text-base md:text-lg font-semibold tracking-wide text-center md:text-left">
+            RESUME
+          </h2>
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
+            <a
+              href={RESUME_PDF_HREF}
+              download="Mayank-Hothur-Resume.pdf"
+              className="inline-flex items-center justify-center rounded-md border border-black bg-black px-4 py-2.5 text-xs sm:text-sm font-medium text-white underline-offset-2 hover:opacity-90"
+            >
+              Download résumé
+            </a>
+            <a
+              href={RESUME_PDF_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs sm:text-sm underline"
+            >
+              Open in new tab
+            </a>
+          </div>
+          <div className="w-full overflow-hidden rounded-lg border border-black/15 bg-neutral-100 shadow-sm">
+            <iframe
+              title="Résumé preview"
+              src={`${RESUME_PDF_HREF}#view=FitH`}
+              className="h-[min(70vh,720px)] w-full bg-white"
+            />
+          </div>
+        </div>
       </motion.div>
     </section>
   )
@@ -259,14 +326,14 @@ function ProjectsPage({ headerHeight, isActive }: { headerHeight: number; isActi
   return (
     <section
       id="projects"
-      className="px-4 pt-20 pb-32 text-center bg-transparent text-white"
+      className="px-4 pt-20 pb-32 text-center bg-transparent text-black"
       style={{ scrollMarginTop: headerHeight + 16, minHeight: `calc(180dvh - ${headerHeight}px)` }}
     >
       <motion.div
         className="flex flex-col items-center"
         initial={false}
         animate={{ opacity: isActive ? 1 : 0 }}
-        transition={{ duration: 0.4, delay: isActive ? 0.15 : 0 }}
+        transition={{ duration: 0.18, ease: "easeOut" }}
         style={{ pointerEvents: isActive ? "auto" : "none" }}
       >
         <h2 className="mb-6 SpaceGrotesk text-base md:text-lg font-semibold tracking-wide">
@@ -293,6 +360,18 @@ function App() {
   const headerRef = useRef(null)
   const [headerHeight, setHeaderHeight] = useState(0)
 
+  useEffect(() => {
+    const lenis = new Lenis({
+      autoRaf: true,
+      anchors: true,
+      smoothWheel: true,
+      wheelMultiplier: 0.72,
+      touchMultiplier: 0.85,
+      lerp: 0.08,
+    })
+    return () => lenis.destroy()
+  }, [])
+
   useLayoutEffect(() => {
     if (!headerRef.current) return
     const ro = new ResizeObserver(([entry]) => {
@@ -302,14 +381,14 @@ function App() {
     return () => ro.disconnect()
   }, [])
 
-  const [activeSection, setActiveSection] = useState<"home" | "about" | "gallery" | "projects">("home")
+  const [activeSection, setActiveSection] = useState<"home" | "about" | "experience" | "projects">("home")
 
   const themes = useMemo(
     () => ({
       home: { bg: "bg-white", text: "text-black", hex: "#000000", bgValue: "#ffffff" },
-      about: { bg: "bg-[#5a2944]", text: "text-[#f1e4ff]", hex: "#f1e4ff", bgValue: "#5a2944" },
-      gallery: { bg: "bg-[#1D4ED8]", text: "text-[#FF1A1A]", hex: "#FF1A1A", bgValue: "#1D4ED8" },
-      projects: { bg: "bg-orange-500", text: "text-white", hex: "#FFFFFF", bgValue: "#f97316" },
+      about: { bg: "bg-white", text: "text-black", hex: "#000000", bgValue: "#ffffff" },
+      experience: { bg: "bg-white", text: "text-black", hex: "#000000", bgValue: "#ffffff" },
+      projects: { bg: "bg-white", text: "text-black", hex: "#000000", bgValue: "#ffffff" },
     }),
     []
   )
@@ -317,10 +396,15 @@ function App() {
   const headerTheme = themes[activeSection]
 
   useEffect(() => {
-    const sectionIds: Array<"home" | "about" | "gallery" | "projects"> = ["home", "about", "gallery", "projects"]
-    const triggerY = headerHeight + 120
+    const sectionIds: Array<"home" | "about" | "experience" | "projects"> = [
+      "home",
+      "about",
+      "experience",
+      "projects",
+    ]
 
     function updateActiveSection() {
+      const triggerY = headerHeight + Math.min(220, Math.max(140, window.innerHeight * 0.32))
       let active: (typeof sectionIds)[number] = "home"
       for (const id of sectionIds) {
         const el = document.getElementById(id)
@@ -385,15 +469,15 @@ function App() {
             </div>
 
             <nav className="mt-3 w-full">
-              <div className="flex w-full flex-row flex-nowrap items-center justify-evenly gap-4 text-xs">
+              <div className="BerkMono font-normal flex w-full flex-row flex-nowrap items-center justify-evenly gap-4 text-xs">
                 <a href="#home" className="underline">
                   HOME
                 </a>
                 <a href="#about" className="underline">
                   ABOUT ME
                 </a>
-                <a href="#gallery" className="underline">
-                  GALLERY
+                <a href="#experience" className="underline">
+                  EXPERIENCE
                 </a>
                 <a href="#projects" className="underline">
                   PROJECTS
@@ -420,7 +504,7 @@ function App() {
         <main className="flex-1" style={{ paddingTop: headerHeight }}>
           <HomePage headerHeight={headerHeight} isActive={activeSection === "home"} />
           <AboutPage headerHeight={headerHeight} isActive={activeSection === "about"} />
-          <GalleryPage headerHeight={headerHeight} isActive={activeSection === "gallery"} />
+          <ExperiencePage headerHeight={headerHeight} isActive={activeSection === "experience"} />
           <ProjectsPage headerHeight={headerHeight} isActive={activeSection === "projects"} />
         </main>
 

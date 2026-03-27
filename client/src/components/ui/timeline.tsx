@@ -47,8 +47,8 @@ export function Timeline({
             className="flex justify-start pt-6 md:pt-20 md:gap-6"
           >
             <div className="sticky flex flex-col md:flex-row z-40 items-center top-32 self-start max-w-[12rem] lg:max-w-xs md:w-full">
-              <div className="h-8 absolute left-2 md:left-2 w-8 rounded-full bg-[#5a2944] flex items-center justify-center border-2 border-[#f1e4ff]/40">
-                <div className="h-2 w-2 rounded-full bg-[#f1e4ff]" />
+              <div className="h-8 absolute left-2 md:left-2 w-8 rounded-full bg-white flex items-center justify-center border-2 border-black/25">
+                <div className="h-2 w-2 rounded-full bg-black" />
               </div>
               <h3 className="hidden md:block text-sm md:pl-14 md:text-2xl font-bold opacity-80">
                 {item.title}
@@ -65,14 +65,14 @@ export function Timeline({
         ))}
         <div
           style={{ height: `${height}px` }}
-          className="absolute md:left-6 left-6 top-0 overflow-hidden w-[2px] bg-gradient-to-b from-transparent from-0% via-[#f1e4ff]/40 to-transparent to-[99%] [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
+          className="absolute md:left-6 left-6 top-0 overflow-hidden w-[2px] bg-gradient-to-b from-transparent from-0% via-black/25 to-transparent to-[99%] [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
         >
           <motion.div
             style={{
               height: heightTransform,
               opacity: opacityTransform,
             }}
-            className="absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-[#f1e4ff] via-[#f1e4ff]/70 to-transparent rounded-full"
+            className="absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-black via-black/70 to-transparent rounded-full"
           />
         </div>
       </div>

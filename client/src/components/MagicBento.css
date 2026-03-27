@@ -1,12 +1,12 @@
 :root {
-    --hue: 27;
-    --sat: 69%;
+    --hue: 0;
+    --sat: 0%;
     --white: hsl(0, 0%, 100%);
-    --purple-primary: rgba(245, 224, 200, 1);
-    --purple-glow: rgba(245, 224, 200, 0.35);
-    --purple-border: rgba(245, 224, 200, 0.8);
-    --border-color: #e3d4b8;
-    --background-dark: #060010;
+    --purple-primary: rgba(255, 255, 255, 1);
+    --purple-glow: rgba(255, 255, 255, 0.35);
+    --purple-border: rgba(0, 0, 0, 0.35);
+    --border-color: #737373;
+    --background-dark: #0a0a0a;
     color-scheme: light dark;
   }
   
@@ -140,8 +140,8 @@
     padding: 6px;
     background: radial-gradient(
       var(--glow-radius) circle at var(--glow-x) var(--glow-y),
-      rgba(245, 224, 200, calc(var(--glow-intensity) * 0.8)) 0%,
-      rgba(245, 224, 200, calc(var(--glow-intensity) * 0.4)) 30%,
+      rgba(255, 255, 255, calc(var(--glow-intensity) * 0.8)) 0%,
+      rgba(255, 255, 255, calc(var(--glow-intensity) * 0.4)) 30%,
       transparent 60%
     );
     border-radius: inherit;
@@ -165,7 +165,7 @@
   
   .magic-bento-card--border-glow:hover {
     box-shadow:
-      0 4px 20px rgba(120, 90, 40, 0.35),
+      0 4px 20px rgba(0, 0, 0, 0.25),
       0 0 30px var(--purple-glow);
   }
   
@@ -181,14 +181,14 @@
     left: -2px;
     right: -2px;
     bottom: -2px;
-    background: rgba(245, 224, 200, 0.3);
+    background: rgba(255, 255, 255, 0.35);
     border-radius: 50%;
     z-index: -1;
   }
   
   .particle-container:hover {
     box-shadow:
-      0 4px 20px rgba(120, 90, 40, 0.25),
+      0 4px 20px rgba(0, 0, 0, 0.2),
       0 0 30px var(--purple-glow);
   }
   

@@ -1,7 +1,15 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Berk Mono";
+  src: url("../../fonts/BerkMono.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
 }
 
 * {
@@ -12,6 +20,10 @@ html {
   font-family: "Space Grotesk", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+}
+
+.BerkMono {
+  font-family: "Berk Mono", ui-monospace, monospace;
 }
 
 html,
